@@ -14,6 +14,7 @@ namespace test
             rover = new Rover();
         }
 
+        [TestCase("", 0, 0, Direction.North)]
         [TestCase("L", 0, 0, Direction.West)]
         public void Test1(string input, int x, int y, Direction direction)
         {
