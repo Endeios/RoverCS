@@ -16,6 +16,7 @@ namespace test
 
         [TestCase("", 0, 0, Direction.North)]
         [TestCase("L", 0, 0, Direction.West)]
+        [TestCase("LL", 0, 0, Direction.South)]
         public void Test1(string input, int x, int y, Direction direction)
         {
             Position expectedOutput = new Position(x, y, direction);
