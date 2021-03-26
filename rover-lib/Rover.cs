@@ -11,13 +11,23 @@ namespace rover_lib
             { Direction.South , Direction.Est },
             { Direction.Est , Direction.North }
         };
+        private IDictionary<Direction, Direction> rightRotation = new Dictionary<Direction, Direction>()
+        {
+            { Direction.North , Direction.Est },
+            { Direction.Est , Direction.South },
+            { Direction.South , Direction.West },
+            { Direction.West, Direction.North }
+        };
         Direction currentDirection = Direction.North;
         public Position go(string input)
         {
             if(string.IsNullOrEmpty(input))
                 return new Position(0, 0, Direction.North);
             foreach (char command in input) {
-                currentDirection = leftRotation[currentDirection];
+                if(command=='L')
+                    currentDirection = leftRotation[currentDirection];
+                if(command == 'R')
+                    currentDirection = rightRotation[currentDirection];
             }
             return new Position(0, 0, currentDirection);
         }
