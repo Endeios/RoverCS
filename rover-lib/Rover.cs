@@ -19,6 +19,7 @@ namespace rover_lib
             { Direction.West, Direction.North }
         };
         Direction currentDirection = Direction.North;
+        int x = 0;
         public Position go(string input)
         {
             if(string.IsNullOrEmpty(input))
@@ -28,8 +29,10 @@ namespace rover_lib
                     currentDirection = leftRotation[currentDirection];
                 if(command == 'R')
                     currentDirection = rightRotation[currentDirection];
+                if (command == 'M')
+                    x = x+1;
             }
-            return new Position(0, 0, currentDirection);
+            return new Position(x, 0, currentDirection);
         }
     }
 }
