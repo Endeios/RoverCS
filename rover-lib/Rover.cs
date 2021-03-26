@@ -10,6 +10,8 @@ namespace rover_lib
             if(string.IsNullOrEmpty(input))
                 return new Position(0, 0, Direction.North);
             foreach (char command in input) {
+                if (currentDirection == Direction.South)
+                    currentDirection = Direction.Est;
                 if (currentDirection == Direction.West)
                     currentDirection = Direction.South;
                 if (currentDirection == Direction.North)
