@@ -4,14 +4,14 @@ namespace rover_lib
 {
     public class Rover
     {
-        private IDictionary<Direction, Direction> leftRotation = new Dictionary<Direction, Direction>()
+        private readonly IDictionary<Direction, Direction> leftRotation = new Dictionary<Direction, Direction>()
         {
             { Direction.North , Direction.West },
             { Direction.West , Direction.South },
             { Direction.South , Direction.Est },
             { Direction.Est , Direction.North }
         };
-        private IDictionary<Direction, Direction> rightRotation = new Dictionary<Direction, Direction>()
+        private readonly IDictionary<Direction, Direction> rightRotation = new Dictionary<Direction, Direction>()
         {
             { Direction.North , Direction.Est },
             { Direction.Est , Direction.South },
