@@ -19,7 +19,9 @@ namespace test
         [TestCase("LL", 0, 0, Direction.South)]
         [TestCase("LLL", 0, 0, Direction.Est)]
         [TestCase("LLLL", 0, 0, Direction.North)]
-        public void Test1(string input, int x, int y, Direction direction)
+        [TestCase("LLLLLLLL", 0, 0, Direction.North)]
+        [TestCase("LLLLLLL", 0, 0, Direction.Est)]
+        public void TestGoTo(string input, int x, int y, Direction direction)
         {
             Position expectedOutput = new Position(x, y, direction);
             Position retVal = rover.go(input);
