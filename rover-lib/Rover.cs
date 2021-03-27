@@ -35,30 +35,78 @@ namespace rover_lib
             if(string.IsNullOrEmpty(input))
                 return new Position(0, 0, Direction.North);
             foreach (char command in input) {
-                if(command=='L')
-                    currentDirection = leftRotation[currentDirection];
-                if(command == 'R')
-                    currentDirection = rightRotation[currentDirection];
+                if (command == 'L')
+                    RotateLeft();
+                if (command == 'R')
+                    RotateRight();
                 if (command == 'M')
-                {
-                    if(currentDirection==Direction.Est)
-                        x = (x + 1)%worldWidth;
-                    if (currentDirection == Direction.West)
-                    {
-                        x--;
-                        if (x < 0) x = worldWidth - 1;
-                    }
-                    if(currentDirection == Direction.North)
-                    {
-                        y--;
-                        if (y < 0) y = worldHeight - 1;
-                    }
-                    if(currentDirection==Direction.South)
-                        y = (y + 1)%worldHeight;
-                    
-                }
+                    moveForward();
             }
             return new Position(x, y, currentDirection);
+        }
+
+        private void moveForward()
+        {
+            if (RoverIsPointingEast())
+                MoveEast();
+            if (RoverIsPointingWest())
+                MoveWest();
+            if (RoverIsPointingNorth())
+                MoveNorth();
+            if (RoverIsPointingSouth())
+                MoveSouth();
+        }
+
+        private void MoveSouth()
+        {
+            y = (y + 1) % worldHeight;
+        }
+
+        private bool RoverIsPointingSouth()
+        {
+            return currentDirection == Direction.South;
+        }
+
+        private void MoveNorth()
+        {
+            y--;
+            if (y < 0) y = worldHeight - 1;
+        }
+
+        private bool RoverIsPointingNorth()
+        {
+            return currentDirection == Direction.North;
+        }
+
+        private void MoveWest()
+        {
+            x--;
+            if (x < 0) x = worldWidth - 1;
+        }
+
+        private bool RoverIsPointingWest()
+        {
+            return currentDirection == Direction.West;
+        }
+
+        private void MoveEast()
+        {
+            x = (x + 1) % worldWidth;
+        }
+
+        private bool RoverIsPointingEast()
+        {
+            return currentDirection == Direction.Est;
+        }
+
+        private void RotateRight()
+        {
+            currentDirection = rightRotation[currentDirection];
+        }
+
+        private void RotateLeft()
+        {
+            currentDirection = leftRotation[currentDirection];
         }
     }
 }
