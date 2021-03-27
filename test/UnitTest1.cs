@@ -27,6 +27,16 @@ namespace test
         [TestCase("RRRR", 0, 0, Direction.North)]
         [TestCase("RRRRR", 0, 0, Direction.Est)]
         [TestCase("RM", 1, 0, Direction.Est)]
+        [TestCase("RMMMMMMMMM", 9, 0, Direction.Est)]
+        [TestCase("RMMMMMMMMMM", 0, 0, Direction.Est)]
+        [TestCase("LM", 9, 0, Direction.West)]
+        [TestCase("LMMMMMMMMMM", 0, 0, Direction.West)]
+        [TestCase("LMMMMMMMMMMM", 9, 0, Direction.West)]
+        [TestCase("M", 0, 9, Direction.North)]
+        [TestCase("MMMMMMMMMM", 0, 0, Direction.North)]
+        [TestCase("MMMMMMMMMMM", 0, 9, Direction.North)]
+        [TestCase("RRM", 0, 1, Direction.South)]
+        [TestCase("RRMMMMMMMMMM", 0, 0, Direction.South)]
         public void TestGoTo(string input, int x, int y, Direction direction)
         {
             Position expectedOutput = new Position(x, y, direction);

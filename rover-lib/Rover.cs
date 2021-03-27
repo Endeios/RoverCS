@@ -4,6 +4,15 @@ namespace rover_lib
 {
     public class Rover
     {
+        int worldWidth;
+        int worldHeight;
+
+        public Rover(int worldWidth=10, int worldHeight=10)
+        {
+            this.worldWidth = worldWidth;
+            this.worldHeight = worldHeight;
+        }
+
         private readonly IDictionary<Direction, Direction> leftRotation = new Dictionary<Direction, Direction>()
         {
             { Direction.North , Direction.West },
@@ -20,6 +29,7 @@ namespace rover_lib
         };
         Direction currentDirection = Direction.North;
         int x = 0;
+        int y = 0;
         public Position go(string input)
         {
             if(string.IsNullOrEmpty(input))
@@ -30,9 +40,25 @@ namespace rover_lib
                 if(command == 'R')
                     currentDirection = rightRotation[currentDirection];
                 if (command == 'M')
-                    x = x+1;
+                {
+                    if(currentDirection==Direction.Est)
+                        x = (x + 1)%worldWidth;
+                    if (currentDirection == Direction.West)
+                    {
+                        x--;
+                        if (x < 0) x = worldWidth - 1;
+                    }
+                    if(currentDirection == Direction.North)
+                    {
+                        y--;
+                        if (y < 0) y = worldHeight - 1;
+                    }
+                    if(currentDirection==Direction.South)
+                        y = (y + 1)%worldHeight;
+                    
+                }
             }
-            return new Position(x, 0, currentDirection);
+            return new Position(x, y, currentDirection);
         }
     }
 }
