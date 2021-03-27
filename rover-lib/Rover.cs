@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace rover_lib
 {
@@ -7,10 +8,17 @@ namespace rover_lib
         int worldWidth;
         int worldHeight;
 
-        public Rover(int worldWidth=10, int worldHeight=10)
+        public Rover(int worldWidth = 10, int worldHeight = 10)
         {
             this.worldWidth = worldWidth;
             this.worldHeight = worldHeight;
+            advance = new Dictionary<Direction, Action>()
+            {
+                { Direction.Est, MoveEast },
+                { Direction.West, MoveWest },
+                { Direction.North, MoveNorth },
+                { Direction.South, MoveSouth }
+            };
         }
 
         private readonly IDictionary<Direction, Direction> leftRotation = new Dictionary<Direction, Direction>()
@@ -27,14 +35,18 @@ namespace rover_lib
             { Direction.South , Direction.West },
             { Direction.West, Direction.North }
         };
+
+        private readonly IDictionary<Direction, Action> advance;
+
         Direction currentDirection = Direction.North;
         int x = 0;
         int y = 0;
         public Position go(string input)
         {
-            if(string.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
                 return new Position(0, 0, Direction.North);
-            foreach (char command in input) {
+            foreach (char command in input)
+            {
                 if (command == 'L')
                     RotateLeft();
                 if (command == 'R')
@@ -47,24 +59,12 @@ namespace rover_lib
 
         private void moveForward()
         {
-            if (RoverIsPointingEast())
-                MoveEast();
-            if (RoverIsPointingWest())
-                MoveWest();
-            if (RoverIsPointingNorth())
-                MoveNorth();
-            if (RoverIsPointingSouth())
-                MoveSouth();
+            advance[this.currentDirection]();
         }
 
         private void MoveSouth()
         {
             y = (y + 1) % worldHeight;
-        }
-
-        private bool RoverIsPointingSouth()
-        {
-            return currentDirection == Direction.South;
         }
 
         private void MoveNorth()
@@ -73,30 +73,15 @@ namespace rover_lib
             if (y < 0) y = worldHeight - 1;
         }
 
-        private bool RoverIsPointingNorth()
-        {
-            return currentDirection == Direction.North;
-        }
-
         private void MoveWest()
         {
             x--;
             if (x < 0) x = worldWidth - 1;
         }
 
-        private bool RoverIsPointingWest()
-        {
-            return currentDirection == Direction.West;
-        }
-
         private void MoveEast()
         {
             x = (x + 1) % worldWidth;
-        }
-
-        private bool RoverIsPointingEast()
-        {
-            return currentDirection == Direction.Est;
         }
 
         private void RotateRight()
