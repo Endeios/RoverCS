@@ -6,7 +6,18 @@ namespace app
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            if (args.Length != 1)
+            {
+                PrintUsage();
+                Environment.Exit(1);
+            }
+            var result = new rover_lib.Rover().go(args[0]);
+            Console.WriteLine($"{result}");
+        }
+
+        private static void PrintUsage()
+        {
+            Console.WriteLine("Usage : <Program> [Sequence of L,R, or M]");
         }
     }
 }
